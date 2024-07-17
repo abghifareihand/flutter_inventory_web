@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/presentation/auth/pages/register_page.dart';
 import 'package:iconventory_web/presentation/auth/pages/register_role_page.dart';
 
 import '../../../core/components/custom_button.dart';

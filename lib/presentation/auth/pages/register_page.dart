@@ -21,8 +21,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _obscureText = true;
-
   void _buttonRegister() {
     if (_nameController.text.isEmpty ||
         _emailController.text.isEmpty ||
