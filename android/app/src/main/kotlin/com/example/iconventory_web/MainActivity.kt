@@ -1,4 +1,4 @@
-package com.example.iconventory_web
+package com.iconventory_web
 
 import io.flutter.embedding.android.FlutterActivity
 

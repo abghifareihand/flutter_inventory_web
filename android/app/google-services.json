@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819516809721",
+    "project_id": "iconventory-web",
+    "storage_bucket": "iconventory-web.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819516809721:android:5741812312b695fa825d28",
+        "android_client_info": {
+          "package_name": "com.iconventory_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD78zA5jE_Ep_1zQKLe6FFURX7uS9aIrXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
