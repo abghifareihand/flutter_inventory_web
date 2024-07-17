@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconventory_web/presentation/auth/pages/register_page.dart';
 
+import '../../../core/components/custom_button.dart';
 import '../widgets/role_tile.dart';
 
 class RegisterRolePage extends StatefulWidget {
@@ -32,6 +34,10 @@ class _RegisterRolePageState extends State<RegisterRolePage> {
               children: [
                 const Text(
                   'Select Role',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 30),
                 RoleTile(
@@ -54,16 +60,18 @@ class _RegisterRolePageState extends State<RegisterRolePage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                    ),
-                    onPressed: () {},
-                    child: const Text('Register'),
-                  ),
+                CustomButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(
+                          role: _selectedRole,
+                        ),
+                      ),
+                    );
+                  },
+                  text: 'Continue',
                 ),
                 const SizedBox(
                   height: 20.0,

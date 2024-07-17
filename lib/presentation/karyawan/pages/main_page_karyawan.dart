@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/home_page_karyawan.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/profile_page_karyawan.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/transaction_page_karyawan.dart';
+
+import '../../auth/bloc/user/user_bloc.dart';
 
 class MainPageKaryawan extends StatefulWidget {
   const MainPageKaryawan({super.key});
@@ -11,6 +14,12 @@ class MainPageKaryawan extends StatefulWidget {
 }
 
 class _MainPageKaryawanState extends State<MainPageKaryawan> {
+  @override
+  void initState() {
+    context.read<UserBloc>().add(GetUser());
+    super.initState();
+  }
+
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
@@ -28,7 +37,7 @@ class _MainPageKaryawanState extends State<MainPageKaryawan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.withOpacity(0.1),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

@@ -20,7 +20,7 @@ class RoleTile extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
-            Radius.circular(4),
+            Radius.circular(12),
           ),
           color: Colors.white,
           border: roleName == selectedRole
@@ -41,6 +41,10 @@ class RoleTile extends StatelessWidget {
                 children: [
                   Text(
                     roleName.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Text(
                     'Register sebagai $roleName',

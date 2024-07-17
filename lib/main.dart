@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:iconventory_web/presentation/auth/pages/login_page.dart';
-import 'package:iconventory_web/presentation/auth/pages/register_role_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconventory_web/presentation/auth/pages/splash_page.dart';
 import 'firebase_options.dart';
+import 'presentation/auth/bloc/login/login_bloc.dart';
+import 'presentation/auth/bloc/logout/logout_bloc.dart';
+import 'presentation/auth/bloc/register/register_bloc.dart';
+import 'presentation/auth/bloc/user/user_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +21,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: false,
+    return MultiBlocProvider(
+      providers: [
+        /// AUTH
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UserBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LogoutBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: false,
+        ),
+        home: const SplashPage(),
       ),
-      home: const LoginPage(),
     );
   }
 }

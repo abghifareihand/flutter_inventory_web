@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconventory_web/presentation/karyawan/pages/main_page_karyawan.dart';
+import 'package:iconventory_web/presentation/manager/pages/main_page_manager.dart';
+
+import '../../../core/components/custom_button.dart';
+import '../../../core/components/custom_field.dart';
+import '../bloc/register/register_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final String role;
+  const RegisterPage({super.key, required this.role});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -14,6 +22,26 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscureText = true;
+
+  void _buttonRegister() {
+    if (_nameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Harap isi semua field'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else {
+      context.read<RegisterBloc>().add(Register(
+            name: _nameController.text,
+            email: _emailController.text,
+            password: _passwordController.text,
+            role: widget.role,
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,66 +60,87 @@ class _RegisterPageState extends State<RegisterPage> {
             constraints: const BoxConstraints(maxWidth: 400.0),
             child: Column(
               children: [
-                const Text(
-                  'Register',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.arrow_back),
+                    ),
+                    const Expanded(
+                      child: Center(
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
+                      CustomField.text(
                         controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Name',
-                          border: OutlineInputBorder(),
-                        ),
+                        label: 'Name',
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
+                      CustomField.email(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
+                        label: 'Email',
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
+                      CustomField.password(
                         controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                        ),
-                        obscureText: _obscureText,
+                        label: 'Password',
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                          ),
-                          onPressed: () {},
-                          child: const Text('Register'),
-                        ),
+                      BlocConsumer<RegisterBloc, RegisterState>(
+                        listener: (context, state) {
+                          if (state is RegisterLoaded) {
+                            final user = state.user;
+
+                            /// Jika role manager ke MainPageKaryawan
+                            if (user.role == 'karyawan') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainPageKaryawan(),
+                                ),
+                              );
+                            }
+
+                            /// Jika role manager ke MainPageManager
+                            if (user.role == 'manager') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPageManager(),
+                                ),
+                              );
+                            }
+                          }
+                          if (state is RegisterError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return CustomButton(
+                            onPressed: _buttonRegister,
+                            text: 'Register',
+                            isLoading: state is RegisterLoading,
+                          );
+                        },
                       ),
                     ],
                   ),

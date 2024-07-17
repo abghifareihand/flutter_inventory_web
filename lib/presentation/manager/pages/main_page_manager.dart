@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconventory_web/presentation/auth/bloc/user/user_bloc.dart';
 import 'package:iconventory_web/presentation/manager/pages/home_page_manager.dart';
 import 'package:iconventory_web/presentation/manager/pages/profile_page_manager.dart';
 import 'package:iconventory_web/presentation/manager/pages/transaction_page_manager.dart';
@@ -12,6 +14,12 @@ class MainPageManager extends StatefulWidget {
 }
 
 class _MainPageManagerState extends State<MainPageManager> {
+  @override
+  void initState() {
+    context.read<UserBloc>().add(GetUser());
+    super.initState();
+  }
+
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/presentation/auth/pages/register_page.dart';
 import 'package:iconventory_web/presentation/auth/pages/register_role_page.dart';
+
+import '../../../core/components/custom_button.dart';
+import '../../../core/components/custom_field.dart';
+import '../../karyawan/pages/main_page_karyawan.dart';
+import '../../manager/pages/main_page_manager.dart';
+import '../bloc/login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,8 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,51 +45,68 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
+                      CustomField.email(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
+                        label: 'Email',
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
+                      CustomField.password(
                         controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                        ),
-                        obscureText: _obscureText,
+                        label: 'Password',
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                          ),
-                          onPressed: () {},
-                          child: const Text('Login'),
-                        ),
+                      BlocConsumer<LoginBloc, LoginState>(
+                        listener: (context, state) {
+                          if (state is LoginLoaded) {
+                            final user = state.user;
+                            debugPrint('Rolemu : ${user.role}');
+
+                            /// Jika role manager ke MainPageKaryawan
+                            if (user.role == 'karyawan') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainPageKaryawan(),
+                                ),
+                              );
+                            }
+
+                            /// Jika role manager ke MainPageManager
+                            if (user.role == 'manager') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPageManager(),
+                                ),
+                              );
+                            }
+                          }
+                          if (state is LoginError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return CustomButton(
+                            onPressed: () {
+                              context.read<LoginBloc>().add(Login(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  ));
+                            },
+                            isLoading: state is LoginLoading,
+                            text: 'Login',
+                          );
+                        },
                       ),
                     ],
                   ),
