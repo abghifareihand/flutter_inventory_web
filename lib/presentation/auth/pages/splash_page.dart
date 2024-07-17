@@ -54,17 +54,11 @@ class _SplashPageState extends State<SplashPage> {
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'ICONVENTORY',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Melayani Anda dengan Sepenuh Hati',
-                style: TextStyle(
-                  fontSize: 14,
+              SizedBox(
+                height: 48,
+                width: 48,
+                child: CircularProgressIndicator(
+                  strokeWidth: 6,
                 ),
               ),
             ],

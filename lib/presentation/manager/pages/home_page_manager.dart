@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconventory_web/core/components/custom_field.dart';
 
 import '../widgets/header.dart';
 
@@ -6,7 +7,7 @@ class HomePageManager extends StatelessWidget {
   const HomePageManager({super.key});
 
   // Data source
-  List<Map<String, String>> getData() {
+  List<Map<String, dynamic>> getData() {
     return List.generate(
       10,
       (index) => {
@@ -57,7 +58,88 @@ class HomePageManager extends StatelessWidget {
                               ),
                             ),
                             ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: SizedBox(
+                                      width: 600,
+                                      child: SingleChildScrollView(
+                                        padding: const EdgeInsets.all(24.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Add Product',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 16),
+                                            const CustomField.text(
+                                              label: 'Nama barang',
+                                            ),
+                                            const CustomField.text(
+                                              label: 'Kode barang',
+                                            ),
+                                            const CustomField.text(
+                                              label: 'Kategori',
+                                            ),
+                                            const CustomField.text(
+                                              label: 'Spesifikasi',
+                                            ),
+                                            const CustomField.text(
+                                              label: 'Tahun barang',
+                                            ),
+                                            const CustomField.text(
+                                              label: 'Stock barang',
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const SizedBox(
+                                                    width: 120,
+                                                    height: 40,
+                                                    child: Center(
+                                                        child: Text('Cancel')),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8.0),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const SizedBox(
+                                                    width: 120,
+                                                    height: 40,
+                                                    child: Center(
+                                                      child: Text('Add'),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),

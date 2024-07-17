@@ -16,13 +16,6 @@ class ProfilePageKaryawan extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            border: Border.all(
-              color: Colors.grey.withOpacity(0.2),
-            ),
-          ),
           constraints: const BoxConstraints(maxWidth: 950.0),
           child: Column(
             children: [
