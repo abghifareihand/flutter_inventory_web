@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconventory_web/core/components/button_primary.dart';
 import 'package:iconventory_web/core/components/custom_field.dart';
 import 'package:iconventory_web/data/models/product_model.dart';
 import 'package:iconventory_web/presentation/manager/bloc/add_product/add_product_bloc.dart';
+import 'package:iconventory_web/presentation/manager/bloc/delete_product/delete_product_bloc.dart';
 
+import '../../../core/components/alert_delete.dart';
 import '../bloc/get_product/get_product_bloc.dart';
 
 class HomePageManager extends StatefulWidget {
@@ -236,14 +239,29 @@ class _HomePageManagerState extends State<HomePageManager> {
                                           'Status',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
+                                        DataColumn(
+                                            label: Text(
+                                          'Action',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        )),
                                       ],
                                       rows: data.map((product) {
                                         return DataRow(cells: [
-                                          DataCell(Text(product.code)),
-                                          DataCell(Text(product.name)),
-                                          DataCell(Text(product.category)),
-                                          DataCell(Text(product.year.toString())),
-                                          DataCell(Text(product.stock.toString())),
+                                          DataCell(
+                                            Text(product.code),
+                                          ),
+                                          DataCell(
+                                            Text(product.name),
+                                          ),
+                                          DataCell(
+                                            Text(product.category),
+                                          ),
+                                          DataCell(
+                                            Text(product.year.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(product.stock.toString()),
+                                          ),
                                           DataCell(
                                             Text(
                                               product.status ? 'ADA'.toUpperCase() : 'KOSONG'.toUpperCase(),
@@ -251,6 +269,45 @@ class _HomePageManagerState extends State<HomePageManager> {
                                                 fontWeight: FontWeight.bold,
                                                 color: product.status ? Colors.green : Colors.red,
                                               ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            Row(
+                                              children: [
+                                                ButtonElevated(
+                                                  color: Colors.green,
+                                                  title: 'Edit',
+                                                  onPressed: () {},
+                                                ),
+                                                const SizedBox(
+                                                  width: 12.0,
+                                                ),
+                                                BlocListener<DeleteProductBloc, DeleteProductState>(
+                                                  listener: (context, state) {
+                                                    if (state is DeleteProductLoaded) {
+                                                      context.read<GetProductBloc>().add(GetProduct());
+                                                    }
+                                                  },
+                                                  child: ButtonElevated(
+                                                    color: Colors.red,
+                                                    title: 'Hapus',
+                                                    onPressed: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return AlertDelete(
+                                                            message: 'Apa kamu yakin hapus produk ini?',
+                                                            onPressed: () {
+                                                              context.read<DeleteProductBloc>().add(DeleteProduct(productId: product.zproductId!));
+                                                              Navigator.pop(context);
+                                                            },
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ]);
