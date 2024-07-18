@@ -6,7 +6,6 @@ import '../../../core/components/custom_button.dart';
 import '../../auth/bloc/logout/logout_bloc.dart';
 import '../../auth/bloc/user/user_bloc.dart';
 import '../../auth/pages/login_page.dart';
-import '../widgets/header.dart';
 
 class ProfilePageManager extends StatelessWidget {
   const ProfilePageManager({super.key});
@@ -18,9 +17,6 @@ class ProfilePageManager extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // const Header(
-            //   title: 'Profile',
-            // ),
             const SizedBox(height: 16),
             Row(
               children: [
