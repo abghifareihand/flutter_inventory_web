@@ -16,6 +16,7 @@ class CustomField extends StatefulWidget {
   final TextEditingController? controller;
   final int? maxLines;
   final String? suffixText; // Tambahkan parameter untuk suffix text
+  final bool readOnly; // Tambahkan parameter readOnly
 
   const CustomField.text({
     super.key,
@@ -25,6 +26,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.text,
     this.maxLines,
     this.suffixText,
+    this.readOnly = false, // Atur default value
   });
 
   const CustomField.email({
@@ -35,6 +37,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.email,
     this.maxLines,
     this.suffixText,
+    this.readOnly = false, // Atur default value
   });
 
   const CustomField.password({
@@ -45,6 +48,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.password,
     this.maxLines,
     this.suffixText,
+    this.readOnly = false, // Atur default value
   });
 
   const CustomField.number({
@@ -55,6 +59,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.number,
     this.maxLines,
     this.suffixText,
+    this.readOnly = false, // Atur default value
   });
 
   const CustomField.comment({
@@ -65,6 +70,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.comment,
     this.maxLines,
     this.suffixText,
+    this.readOnly = false, // Atur default value
   });
 
   const CustomField.person({
@@ -75,6 +81,7 @@ class CustomField extends StatefulWidget {
     this.style = CustomFieldStyle.person,
     this.maxLines,
     required this.suffixText, // Jadikan parameter required
+    this.readOnly = false, // Atur default value
   });
 
   @override
@@ -106,23 +113,16 @@ class _CustomFieldState extends State<CustomField> {
             child: TextFormField(
               controller: widget.controller,
               keyboardType: widget.inputType,
-              textCapitalization: widget.style == CustomFieldStyle.text
-                  ? TextCapitalization.words
-                  : TextCapitalization.none,
-              textInputAction: widget.style == CustomFieldStyle.password
-                  ? TextInputAction.done
-                  : TextInputAction.next,
-              obscureText: _obscureText
-                  ? widget.style == CustomFieldStyle.password
-                  : false,
+              textCapitalization: widget.style == CustomFieldStyle.text ? TextCapitalization.words : TextCapitalization.none,
+              textInputAction: widget.style == CustomFieldStyle.password ? TextInputAction.done : TextInputAction.next,
+              obscureText: _obscureText ? widget.style == CustomFieldStyle.password : false,
               cursorColor: Colors.blue,
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
-              maxLines: widget.style == CustomFieldStyle.comment
-                  ? widget.maxLines ?? 3
-                  : 1,
+              maxLines: widget.style == CustomFieldStyle.comment ? widget.maxLines ?? 3 : 1,
+              readOnly: widget.readOnly, // Gunakan properti readOnly
               decoration: InputDecoration(
                 hintText: 'Masukkan ${widget.label.toLowerCase()}',
                 hintStyle: const TextStyle(
@@ -156,16 +156,12 @@ class _CustomFieldState extends State<CustomField> {
                           });
                         },
                         child: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _obscureText ? Icons.visibility_off : Icons.visibility,
                           color: _obscureText ? Colors.grey : Colors.blue,
                         ),
                       )
                     : null,
-                suffixText: widget.style == CustomFieldStyle.person
-                    ? widget.suffixText
-                    : null,
+                suffixText: widget.style == CustomFieldStyle.person ? widget.suffixText : null,
               ),
             ),
           ),

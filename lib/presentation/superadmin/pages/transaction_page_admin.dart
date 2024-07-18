@@ -1,28 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/core/components/button_primary.dart';
-import 'package:iconventory_web/core/components/custom_field.dart';
-import 'package:iconventory_web/data/models/product_model.dart';
-import 'package:iconventory_web/presentation/superadmin/bloc/add_product/add_product_bloc.dart';
-import 'package:iconventory_web/presentation/superadmin/bloc/delete_product/delete_product_bloc.dart';
+import 'package:iconventory_web/core/constants/date_time_ext.dart';
 
-import '../../../core/components/alert_delete.dart';
-import '../../superadmin/bloc/get_product/get_product_bloc.dart';
+import '../../superadmin/bloc/get_all_booking/get_all_booking_bloc.dart';
+import '../../superadmin/bloc/update_booking/update_booking_bloc.dart';
 
-class HomePageManager extends StatefulWidget {
-  const HomePageManager({super.key});
-
-  @override
-  State<HomePageManager> createState() => _HomePageManagerState();
-}
-
-class _HomePageManagerState extends State<HomePageManager> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _specificationController = TextEditingController();
-  final TextEditingController _yearController = TextEditingController();
-  final TextEditingController _stockController = TextEditingController();
+class TransactionPageAdmin extends StatelessWidget {
+  const TransactionPageAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +30,7 @@ class _HomePageManagerState extends State<HomePageManager> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Data Product',
+                          'Data Booking',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,
@@ -53,15 +38,15 @@ class _HomePageManagerState extends State<HomePageManager> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        BlocBuilder<GetProductBloc, GetProductState>(
+                        BlocBuilder<GetAllBookingBloc, GetAllBookingState>(
                           builder: (context, state) {
-                            if (state is GetProductLoaded) {
-                              final data = state.product;
+                            if (state is GetAllBookingLoaded) {
+                              final data = state.booking;
 
                               if (data.isEmpty) {
                                 return const Center(
                                   child: Text(
-                                    'Belum ada data product',
+                                    'Belum ada data booking',
                                   ),
                                 );
                               }
@@ -73,27 +58,22 @@ class _HomePageManagerState extends State<HomePageManager> {
                                       columns: const [
                                         DataColumn(
                                             label: Text(
-                                          'Kode',
+                                          'Username',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
                                         DataColumn(
                                             label: Text(
-                                          'Nama',
+                                          'Total Product',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
                                         DataColumn(
                                             label: Text(
-                                          'Kategori',
+                                          'Tanggal Pinjam',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
                                         DataColumn(
                                             label: Text(
-                                          'Tahun',
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                        )),
-                                        DataColumn(
-                                            label: Text(
-                                          'Stock',
+                                          'Tanggal Kembali',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
                                         DataColumn(
@@ -102,33 +82,49 @@ class _HomePageManagerState extends State<HomePageManager> {
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
                                       ],
-                                      rows: data.map((product) {
-                                        return DataRow(cells: [
-                                          DataCell(
-                                            Text(product.code),
-                                          ),
-                                          DataCell(
-                                            Text(product.name),
-                                          ),
-                                          DataCell(
-                                            Text(product.category),
-                                          ),
-                                          DataCell(
-                                            Text(product.year.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(product.stock.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              product.status ? 'READY'.toUpperCase() : 'KOSONG'.toUpperCase(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: product.status ? Colors.green : Colors.red,
+                                      rows: data.map((booking) {
+                                        return DataRow(
+                                          cells: [
+                                            DataCell(
+                                              Text(booking.userName),
+                                            ),
+                                            DataCell(
+                                              Text('${booking.totalProduct} Barang'),
+                                            ),
+                                            DataCell(
+                                              Text(booking.tanggalPinjam.toFormattedDate()),
+                                            ),
+                                            DataCell(
+                                              Text(booking.tanggalKembali.toFormattedDate()),
+                                            ),
+                                            DataCell(
+                                              BlocConsumer<UpdateBookingBloc, UpdateBookingState>(
+                                                listener: (context, state) {
+                                                  if (state is UpdateBookingLoaded) {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text('Booking berhasil di-approve'),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                builder: (context, state) {
+                                                  return ButtonElevated(
+                                                    color: booking.isApproved ? Colors.green : Colors.red,
+                                                    title: booking.isApproved ? 'Approved' : 'Not Approved',
+                                                    onPressed: booking.isApproved
+                                                        ? () {}
+                                                        : () {
+                                                            context.read<UpdateBookingBloc>().add(
+                                                                  UpdateBooking(bookingId: booking.zbookingId!),
+                                                                );
+                                                          },
+                                                  );
+                                                },
                                               ),
                                             ),
-                                          ),
-                                        ]);
+                                          ],
+                                        );
                                       }).toList(),
                                     ),
                                   ),
@@ -136,7 +132,7 @@ class _HomePageManagerState extends State<HomePageManager> {
                               );
                             }
 
-                            if (state is GetProductError) {
+                            if (state is GetAllBookingError) {
                               return Center(
                                 child: Text(state.message),
                               );

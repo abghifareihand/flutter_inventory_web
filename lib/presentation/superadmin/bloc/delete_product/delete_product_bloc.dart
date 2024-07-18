@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/datasources/manager_remote_datasource.dart';
+import '../../../../data/datasources/admin_remote_datasource.dart';
 
 part 'delete_product_event.dart';
 part 'delete_product_state.dart';

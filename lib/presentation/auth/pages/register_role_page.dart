@@ -59,6 +59,16 @@ class _RegisterRolePageState extends State<RegisterRolePage> {
                     });
                   },
                 ),
+                const SizedBox(height: 16),
+                RoleTile(
+                  selectedRole: _selectedRole,
+                  roleName: 'admin',
+                  onTap: () {
+                    setState(() {
+                      _selectedRole = 'admin';
+                    });
+                  },
+                ),
                 const SizedBox(height: 20),
                 CustomButton(
                   onPressed: () {

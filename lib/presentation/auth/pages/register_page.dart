@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/main_page_karyawan.dart';
 import 'package:iconventory_web/presentation/manager/pages/main_page_manager.dart';
+import 'package:iconventory_web/presentation/superadmin/pages/main_page_admin.dart';
 
 import '../../../core/components/custom_button.dart';
 import '../../../core/components/custom_field.dart';
@@ -116,6 +117,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const MainPageManager(),
+                                ),
+                              );
+                            }
+
+                            /// Jika role admin ke MainPageAdmin
+                            if (user.role == 'admin') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainPageAdmin(),
                                 ),
                               );
                             }

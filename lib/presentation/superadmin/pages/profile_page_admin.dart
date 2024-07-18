@@ -7,8 +7,8 @@ import '../../auth/bloc/logout/logout_bloc.dart';
 import '../../auth/bloc/user/user_bloc.dart';
 import '../../auth/pages/login_page.dart';
 
-class ProfilePageManager extends StatelessWidget {
-  const ProfilePageManager({super.key});
+class ProfilePageAdmin extends StatelessWidget {
+  const ProfilePageAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {

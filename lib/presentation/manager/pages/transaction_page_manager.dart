@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/core/components/button_primary.dart';
 import 'package:iconventory_web/core/constants/date_time_ext.dart';
 
-import '../bloc/get_all_booking/get_all_booking_bloc.dart';
-import '../bloc/update_booking/update_booking_bloc.dart';
+import '../../superadmin/bloc/get_all_booking/get_all_booking_bloc.dart';
+import '../../superadmin/bloc/update_booking/update_booking_bloc.dart';
 
 class TransactionPageManager extends StatelessWidget {
   const TransactionPageManager({super.key});
@@ -98,29 +98,12 @@ class TransactionPageManager extends StatelessWidget {
                                               Text(booking.tanggalKembali.toFormattedDate()),
                                             ),
                                             DataCell(
-                                              BlocConsumer<UpdateBookingBloc, UpdateBookingState>(
-                                                listener: (context, state) {
-                                                  if (state is UpdateBookingLoaded) {
-                                                    ScaffoldMessenger.of(context).showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text('Booking berhasil di-approve'),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                builder: (context, state) {
-                                                  return ButtonElevated(
-                                                    color: booking.isApproved ? Colors.green : Colors.red,
-                                                    title: booking.isApproved ? 'Approved' : 'Not Approved',
-                                                    onPressed: booking.isApproved
-                                                        ? () {}
-                                                        : () {
-                                                            context.read<UpdateBookingBloc>().add(
-                                                                  UpdateBooking(bookingId: booking.zbookingId!),
-                                                                );
-                                                          },
-                                                  );
-                                                },
+                                              Text(
+                                                booking.isApproved ? 'Approved' : 'Not Approved',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: booking.isApproved ? Colors.green : Colors.red,
+                                                ),
                                               ),
                                             ),
                                           ],

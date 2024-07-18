@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/data/datasources/manager_remote_datasource.dart';
+import 'package:iconventory_web/data/datasources/admin_remote_datasource.dart';
 
 import '../../../../data/models/product_model.dart';
 

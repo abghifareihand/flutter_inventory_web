@@ -5,18 +5,19 @@ import 'package:iconventory_web/presentation/auth/bloc/user/user_bloc.dart';
 import 'package:iconventory_web/presentation/superadmin/bloc/get_all_booking/get_all_booking_bloc.dart';
 import 'package:iconventory_web/presentation/superadmin/bloc/get_karyawan/get_karyawan_bloc.dart';
 import 'package:iconventory_web/presentation/superadmin/bloc/get_product/get_product_bloc.dart';
-import 'package:iconventory_web/presentation/manager/pages/home_page_manager.dart';
-import 'package:iconventory_web/presentation/manager/pages/profile_page_manager.dart';
-import 'package:iconventory_web/presentation/manager/pages/transaction_page_manager.dart';
+import 'package:iconventory_web/presentation/superadmin/pages/home_page_admin.dart';
+import 'package:iconventory_web/presentation/superadmin/pages/karyawan_page_admin.dart';
+import 'package:iconventory_web/presentation/superadmin/pages/profile_page_admin.dart';
+import 'package:iconventory_web/presentation/superadmin/pages/transaction_page_admin.dart';
 
-class MainPageManager extends StatefulWidget {
-  const MainPageManager({super.key});
+class MainPageAdmin extends StatefulWidget {
+  const MainPageAdmin({super.key});
 
   @override
-  State<MainPageManager> createState() => _MainPageManagerState();
+  State<MainPageAdmin> createState() => _MainPageAdminState();
 }
 
-class _MainPageManagerState extends State<MainPageManager> {
+class _MainPageAdminState extends State<MainPageAdmin> {
   @override
   void initState() {
     context.read<UserBloc>().add(GetUser());
@@ -29,9 +30,10 @@ class _MainPageManagerState extends State<MainPageManager> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePageManager(),
-    const TransactionPageManager(),
-    const ProfilePageManager(),
+    const HomePageAdmin(),
+    const TransactionPageAdmin(),
+    const KaryawanPageAdmin(),
+    const ProfilePageAdmin(),
   ];
 
   void _onItemTapped(int index) {
@@ -78,7 +80,7 @@ class _MainPageManagerState extends State<MainPageManager> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Text(
-                              'MANAGER',
+                              'ADMIN',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -102,10 +104,16 @@ class _MainPageManagerState extends State<MainPageManager> {
                       isSelected: _selectedIndex == 1, // Pass selectedIndex
                     ),
                     DrawerListTile(
-                      title: 'Account',
-                      svgSrc: 'assets/icons/menu_task.svg',
+                      title: 'Data Karyawan',
+                      svgSrc: 'assets/icons/menu_tran.svg',
                       onTap: () => _onItemTapped(2),
                       isSelected: _selectedIndex == 2, // Pass selectedIndex
+                    ),
+                    DrawerListTile(
+                      title: 'Account',
+                      svgSrc: 'assets/icons/menu_task.svg',
+                      onTap: () => _onItemTapped(3),
+                      isSelected: _selectedIndex == 3, // Pass selectedIndex
                     ),
                     // Add other menu items here if needed
                   ],

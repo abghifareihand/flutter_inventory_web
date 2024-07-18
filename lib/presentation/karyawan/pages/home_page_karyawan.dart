@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/presentation/karyawan/widgets/grid_card_product.dart';
 
-import '../../manager/bloc/get_product/get_product_bloc.dart';
+import '../../superadmin/bloc/get_product/get_product_bloc.dart';
 
 class HomePageKaryawan extends StatelessWidget {
   const HomePageKaryawan({super.key});

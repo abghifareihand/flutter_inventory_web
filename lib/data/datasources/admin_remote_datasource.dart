@@ -13,7 +13,7 @@ class ManagerRemoteDatasource {
   /// Get Data Karyawan
   Future<Either<String, List<UserResponseModel>>> getKaryawan() async {
     try {
-      final snapshot = await usersCollection.where('role', isEqualTo: 'karyawan').get();
+      final snapshot = await usersCollection.where('role', isNotEqualTo: 'admin').get();
       final users = snapshot.docs.map((doc) => UserResponseModel.fromDocumentSnapshot(doc)).toList();
       return Right(users);
     } catch (e) {

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/data/datasources/manager_remote_datasource.dart';
+import 'package:iconventory_web/data/datasources/admin_remote_datasource.dart';
 
 part 'update_booking_event.dart';
 part 'update_booking_state.dart';

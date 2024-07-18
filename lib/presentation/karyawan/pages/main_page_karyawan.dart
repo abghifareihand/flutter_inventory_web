@@ -6,7 +6,7 @@ import 'package:iconventory_web/presentation/karyawan/pages/profile_page_karyawa
 import 'package:iconventory_web/presentation/karyawan/pages/transaction_page_karyawan.dart';
 
 import '../../auth/bloc/user/user_bloc.dart';
-import '../../manager/bloc/get_product/get_product_bloc.dart';
+import '../../superadmin/bloc/get_product/get_product_bloc.dart';
 
 class MainPageKaryawan extends StatefulWidget {
   const MainPageKaryawan({super.key});

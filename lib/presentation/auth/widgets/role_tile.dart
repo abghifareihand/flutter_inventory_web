@@ -56,12 +56,8 @@ class RoleTile extends StatelessWidget {
               height: 12.0,
             ),
             Icon(
-              roleName == selectedRole
-                  ? Icons.radio_button_checked
-                  : Icons.circle_outlined,
-              color: roleName == selectedRole
-                  ? Colors.blue
-                  : Colors.grey.withOpacity(0.2),
+              roleName == selectedRole ? Icons.radio_button_checked : Icons.circle_outlined,
+              color: roleName == selectedRole ? Colors.blue : Colors.grey.withOpacity(0.2),
             ),
           ],
         ),

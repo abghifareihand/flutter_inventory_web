@@ -29,9 +29,9 @@ class ProfilePageKaryawan extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: Image.asset(
-                              'assets/images/product.jpg',
-                              width: 150,
-                              height: 150,
+                              'assets/images/img_user.png',
+                              width: 120,
+                              height: 120,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -40,18 +40,21 @@ class ProfilePageKaryawan extends StatelessWidget {
                           ),
                           CustomField.text(
                             label: 'Name',
+                            readOnly: true,
                             controller: TextEditingController(
                               text: user.name,
                             ),
                           ),
                           CustomField.text(
                             label: 'Email',
+                            readOnly: true,
                             controller: TextEditingController(
                               text: user.email,
                             ),
                           ),
                           CustomField.text(
                             label: 'Role',
+                            readOnly: true,
                             controller: TextEditingController(
                               text: user.role,
                             ),

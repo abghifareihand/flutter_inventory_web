@@ -26,6 +26,7 @@ class ProductDetailPage extends StatelessWidget {
           Stack(
             children: [
               InkWell(
+                borderRadius: BorderRadius.circular(50),
                 onTap: () {
                   Navigator.push(
                     context,

@@ -11,12 +11,12 @@ import 'presentation/auth/bloc/user/user_bloc.dart';
 import 'presentation/karyawan/bloc/add_booking/add_booking_bloc.dart';
 import 'presentation/karyawan/bloc/cart/cart_bloc.dart';
 import 'presentation/karyawan/bloc/get_booking/get_booking_bloc.dart';
-import 'presentation/manager/bloc/add_product/add_product_bloc.dart';
-import 'presentation/manager/bloc/delete_product/delete_product_bloc.dart';
-import 'presentation/manager/bloc/get_all_booking/get_all_booking_bloc.dart';
-import 'presentation/manager/bloc/get_karyawan/get_karyawan_bloc.dart';
-import 'presentation/manager/bloc/get_product/get_product_bloc.dart';
-import 'presentation/manager/bloc/update_booking/update_booking_bloc.dart';
+import 'presentation/superadmin/bloc/add_product/add_product_bloc.dart';
+import 'presentation/superadmin/bloc/delete_product/delete_product_bloc.dart';
+import 'presentation/superadmin/bloc/get_all_booking/get_all_booking_bloc.dart';
+import 'presentation/superadmin/bloc/get_karyawan/get_karyawan_bloc.dart';
+import 'presentation/superadmin/bloc/get_product/get_product_bloc.dart';
+import 'presentation/superadmin/bloc/update_booking/update_booking_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

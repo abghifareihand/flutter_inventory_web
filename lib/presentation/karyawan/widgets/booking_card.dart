@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconventory_web/core/constants/date_time_ext.dart';
 import 'package:iconventory_web/data/models/booking_model.dart';
+import 'package:iconventory_web/presentation/karyawan/pages/transaction_detail_page.dart';
 
 class BookingCard extends StatelessWidget {
   final BookingModel booking;
@@ -13,7 +14,14 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TransactionDetailPage(booking: booking),
+          ),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -38,12 +46,25 @@ class BookingCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              booking.userName,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  booking.userName,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  booking.isApproved ? 'Approved' : 'Not Approved',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: booking.isApproved ? Colors.green : Colors.red, // Kondisi warna teks
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20.0,
@@ -98,14 +119,6 @@ class BookingCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              booking.isApproved ? 'Approved' : 'Not Approved',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: booking.isApproved ? Colors.green : Colors.red, // Kondisi warna teks
               ),
             ),
           ],
