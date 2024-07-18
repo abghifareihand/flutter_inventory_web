@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/presentation/auth/pages/splash_page.dart';
+import 'package:iconventory_web/presentation/karyawan/bloc/cart/cart_bloc.dart';
 import 'firebase_options.dart';
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/logout/logout_bloc.dart';
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GetKaryawanBloc(),
+        ),
+
+        /// KARYAWAN
+        BlocProvider(
+          create: (context) => CartBloc(),
         ),
       ],
       child: MaterialApp(

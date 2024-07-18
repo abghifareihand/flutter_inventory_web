@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconventory_web/core/components/custom_button.dart';
-import 'package:iconventory_web/models/product_model.dart';
+import 'package:iconventory_web/data/models/product_cart.dart';
+import 'package:iconventory_web/data/models/product_model.dart';
+import 'package:iconventory_web/presentation/karyawan/pages/cart_page_karyawan.dart';
 
-class ProductDetailPage extends StatefulWidget {
-  final Product product;
+import '../bloc/cart/cart_bloc.dart';
+
+class ProductDetailPage extends StatelessWidget {
+  final ProductModel product;
 
   const ProductDetailPage({
     super.key,
@@ -11,15 +16,67 @@ class ProductDetailPage extends StatefulWidget {
   });
 
   @override
-  State<ProductDetailPage> createState() => _ProductDetailPageState();
-}
-
-class _ProductDetailPageState extends State<ProductDetailPage> {
-  int quantity = 1;
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Detail Product'),
+        centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CartPageKaryawan(),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10, right: 6),
+                  padding: const EdgeInsets.all(6),
+                  child: const Icon(
+                    Icons.shopping_bag,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 4,
+                right: 4,
+                child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartLoaded) {
+                      final data = state.products;
+                      int totalQuantity = 0;
+                      for (var cart in data) {
+                        totalQuantity += cart.quantity;
+                      }
+                      if (totalQuantity == 0) {
+                        return const SizedBox.shrink();
+                      }
+                      return CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          totalQuantity.toString(),
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 12.0,
+          ),
+        ],
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -32,7 +89,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.asset(
-                    widget.product.imageUrl,
+                    'assets/images/product_empty.jpg',
                     height: 300,
                     width: 300,
                     fit: BoxFit.cover,
@@ -47,7 +104,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        widget.product.name,
+                        '${product.name} - ${product.code.toUpperCase()}',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
@@ -56,146 +113,81 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(
-                        height: 8.0,
+                        height: 12.0,
+                      ),
+                      const Text(
+                        'Kategori : ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Text(
-                        'Rp. ${widget.product.price}.000',
+                        product.category,
                         style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(
                         height: 12.0,
                       ),
+                      const Text(
+                        'Tahun : ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       Text(
-                        widget.product.specification,
+                        product.year.toString(),
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
                         ),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(
-                        height: 10.0,
+                        height: 12.0,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.grey.withOpacity(0.2),
-                          ),
+                      const Text(
+                        'Stok : ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Subtotal',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  'Rp. ${widget.product.price * quantity}.000',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Row(
-                              children: [
-                                // qty
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        if (quantity > 1) {
-                                          setState(() {
-                                            quantity--;
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: quantity == 1 ? Colors.grey : Colors.blue,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 24,
-                                          color: quantity == 1 ? Colors.grey : Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 32.0,
-                                      child: Center(
-                                        child: Text(
-                                          '$quantity',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          quantity++;
-                                        });
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: const Icon(
-                                          Icons.add,
-                                          size: 24,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 24.0,
-                                ),
-                                Expanded(
-                                  child: CustomButton(
-                                    onPressed: () {},
-                                    text: 'Buy Now',
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
+                      ),
+                      Text(
+                        product.stock.toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
                         ),
+                      ),
+                      const SizedBox(
+                        height: 12.0,
+                      ),
+                      const Text(
+                        'Spesifikasi : ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        product.specification,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      CustomButton(
+                        onPressed: () {
+                          final productItems = ProductCart(
+                            product: product,
+                            quantity: 1,
+                          );
+                          context.read<CartBloc>().add(AddToCart(productItems: productItems));
+                        },
+                        text: 'Add to Cart',
                       ),
                     ],
                   ),

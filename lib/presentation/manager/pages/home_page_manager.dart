@@ -264,7 +264,7 @@ class _HomePageManagerState extends State<HomePageManager> {
                                           ),
                                           DataCell(
                                             Text(
-                                              product.status ? 'ADA'.toUpperCase() : 'KOSONG'.toUpperCase(),
+                                              product.status ? 'READY'.toUpperCase() : 'KOSONG'.toUpperCase(),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: product.status ? Colors.green : Colors.red,

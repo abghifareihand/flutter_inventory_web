@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:iconventory_web/models/product_model.dart';
+import 'package:iconventory_web/data/models/product_model.dart';
 
 import '../pages/product_detail_page.dart';
 
 class GridCardProduct extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
   const GridCardProduct({
     super.key,
     required this.product,
@@ -45,7 +45,7 @@ class GridCardProduct extends StatelessWidget {
                 topRight: Radius.circular(12),
               ),
               child: Image.asset(
-                product.imageUrl,
+                'assets/images/product_empty.jpg',
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class GridCardProduct extends StatelessWidget {
                     height: 4.0,
                   ),
                   Text(
-                    'Rp. ${product.price}.000',
+                    product.year.toString(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

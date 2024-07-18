@@ -5,6 +5,7 @@ import 'package:iconventory_web/presentation/karyawan/pages/profile_page_karyawa
 import 'package:iconventory_web/presentation/karyawan/pages/transaction_page_karyawan.dart';
 
 import '../../auth/bloc/user/user_bloc.dart';
+import '../../manager/bloc/get_product/get_product_bloc.dart';
 
 class MainPageKaryawan extends StatefulWidget {
   const MainPageKaryawan({super.key});
@@ -17,6 +18,7 @@ class _MainPageKaryawanState extends State<MainPageKaryawan> {
   @override
   void initState() {
     context.read<UserBloc>().add(GetUser());
+    context.read<GetProductBloc>().add(GetProduct());
     super.initState();
   }
 
@@ -73,43 +75,13 @@ class _MainPageKaryawanState extends State<MainPageKaryawan> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 6, right: 6),
-                      padding: const EdgeInsets.all(6),
-                      child: const Icon(
-                        Icons.shopping_bag,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Positioned(
-                      top: 3,
-                      right: 3,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          '10',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Karyawan',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(width: 4),
-              ],
+            Text(
+              'Karyawan',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
