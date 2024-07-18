@@ -16,6 +16,7 @@ import 'presentation/manager/bloc/delete_product/delete_product_bloc.dart';
 import 'presentation/manager/bloc/get_all_booking/get_all_booking_bloc.dart';
 import 'presentation/manager/bloc/get_karyawan/get_karyawan_bloc.dart';
 import 'presentation/manager/bloc/get_product/get_product_bloc.dart';
+import 'presentation/manager/bloc/update_booking/update_booking_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GetAllBookingBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UpdateBookingBloc(),
         ),
 
         /// KARYAWAN

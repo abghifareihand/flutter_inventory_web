@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconventory_web/core/components/button_primary.dart';
 import 'package:iconventory_web/core/constants/date_time_ext.dart';
 
 import '../bloc/get_all_booking/get_all_booking_bloc.dart';
+import '../bloc/update_booking/update_booking_bloc.dart';
 
 class TransactionPageManager extends StatelessWidget {
   const TransactionPageManager({super.key});
@@ -74,22 +76,55 @@ class TransactionPageManager extends StatelessWidget {
                                           'Tanggal Kembali',
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         )),
+                                        DataColumn(
+                                            label: Text(
+                                          'Status',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        )),
                                       ],
                                       rows: data.map((booking) {
-                                        return DataRow(cells: [
-                                          DataCell(
-                                            Text(booking.userName),
-                                          ),
-                                          DataCell(
-                                            Text('${booking.totalProduct} Barang'),
-                                          ),
-                                          DataCell(
-                                            Text(booking.tanggalPinjam.toFormattedDate()),
-                                          ),
-                                          DataCell(
-                                            Text(booking.tanggalKembali.toFormattedDate()),
-                                          ),
-                                        ]);
+                                        return DataRow(
+                                          cells: [
+                                            DataCell(
+                                              Text(booking.userName),
+                                            ),
+                                            DataCell(
+                                              Text('${booking.totalProduct} Barang'),
+                                            ),
+                                            DataCell(
+                                              Text(booking.tanggalPinjam.toFormattedDate()),
+                                            ),
+                                            DataCell(
+                                              Text(booking.tanggalKembali.toFormattedDate()),
+                                            ),
+                                            DataCell(
+                                              BlocConsumer<UpdateBookingBloc, UpdateBookingState>(
+                                                listener: (context, state) {
+                                                  if (state is UpdateBookingLoaded) {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text('Booking berhasil di-approve'),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                builder: (context, state) {
+                                                  return ButtonElevated(
+                                                    color: booking.isApproved ? Colors.green : Colors.red,
+                                                    title: booking.isApproved ? 'Approved' : 'Not Approved',
+                                                    onPressed: booking.isApproved
+                                                        ? () {}
+                                                        : () {
+                                                            context.read<UpdateBookingBloc>().add(
+                                                                  UpdateBooking(bookingId: booking.zbookingId!),
+                                                                );
+                                                          },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        );
                                       }).toList(),
                                     ),
                                   ),

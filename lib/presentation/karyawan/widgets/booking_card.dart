@@ -100,6 +100,14 @@ class BookingCard extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            Text(
+              booking.isApproved ? 'Approved' : 'Not Approved',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: booking.isApproved ? Colors.green : Colors.red, // Kondisi warna teks
+              ),
+            ),
           ],
         ),
       ),

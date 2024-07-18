@@ -272,42 +272,30 @@ class _HomePageManagerState extends State<HomePageManager> {
                                             ),
                                           ),
                                           DataCell(
-                                            Row(
-                                              children: [
-                                                ButtonElevated(
-                                                  color: Colors.green,
-                                                  title: 'Edit',
-                                                  onPressed: () {},
-                                                ),
-                                                const SizedBox(
-                                                  width: 12.0,
-                                                ),
-                                                BlocListener<DeleteProductBloc, DeleteProductState>(
-                                                  listener: (context, state) {
-                                                    if (state is DeleteProductLoaded) {
-                                                      context.read<GetProductBloc>().add(GetProduct());
-                                                    }
-                                                  },
-                                                  child: ButtonElevated(
-                                                    color: Colors.red,
-                                                    title: 'Hapus',
-                                                    onPressed: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return AlertDelete(
-                                                            message: 'Apa kamu yakin hapus produk ini?',
-                                                            onPressed: () {
-                                                              context.read<DeleteProductBloc>().add(DeleteProduct(productId: product.zproductId!));
-                                                              Navigator.pop(context);
-                                                            },
-                                                          );
+                                            BlocListener<DeleteProductBloc, DeleteProductState>(
+                                              listener: (context, state) {
+                                                if (state is DeleteProductLoaded) {
+                                                  context.read<GetProductBloc>().add(GetProduct());
+                                                }
+                                              },
+                                              child: ButtonElevated(
+                                                color: Colors.red,
+                                                title: 'Hapus',
+                                                onPressed: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDelete(
+                                                        message: 'Apa kamu yakin hapus produk ini?',
+                                                        onPressed: () {
+                                                          context.read<DeleteProductBloc>().add(DeleteProduct(productId: product.zproductId!));
+                                                          Navigator.pop(context);
                                                         },
                                                       );
                                                     },
-                                                  ),
-                                                ),
-                                              ],
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ]);

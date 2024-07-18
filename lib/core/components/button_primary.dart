@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ButtonElevated extends StatelessWidget {
   final Color color;
   final String title;
-  final VoidCallback onPressed;
+  final Function()? onPressed;
 
   const ButtonElevated({
     super.key,

@@ -67,13 +67,35 @@ class ManagerRemoteDatasource {
   }
 
   /// Get all bookings
-  Future<Either<String, List<BookingModel>>> getAllBooking() async {
+  // Future<Either<String, List<BookingModel>>> getAllBooking() async {
+  //   try {
+  //     final snapshot = await bookingCollection.get();
+  //     final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
+  //     return Right(bookings);
+  //   } catch (e) {
+  //     return Left('Failed to retrieve bookings: $e');
+  //   }
+  // }
+
+  Stream<List<BookingModel>> getAllBooking() {
     try {
-      final snapshot = await bookingCollection.get();
-      final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
-      return Right(bookings);
+      return bookingCollection.snapshots().map(
+            (snapshot) => snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList(),
+          );
     } catch (e) {
-      return Left('Failed to retrieve bookings: $e');
+      throw Exception('Gagal mengambil data keluhan pasien: $e');
+    }
+  }
+
+  /// Update approved
+  Future<Either<String, String>> approveBooking(String bookingId) async {
+    try {
+      await bookingCollection.doc(bookingId).update({
+        'isApproved': true,
+      });
+      return const Right('Booking berhasil di-approve');
+    } catch (e) {
+      return Left('Gagal meng-approve booking: $e');
     }
   }
 }

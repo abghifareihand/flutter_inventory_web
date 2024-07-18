@@ -26,10 +26,17 @@ class KaryawanRemoteDatasource {
         'totalProduct': totalProduct,
         'tanggalPinjam': Timestamp.fromDate(tanggalPinjam.toUtc()),
         'tanggalKembali': Timestamp.fromDate(tanggalKembali.toUtc()),
+        'isApproved': false,
       };
 
-      // Add data to Firestore
-      await bookingCollection.add(bookingData);
+      // Add data to Firestore and get document reference
+      DocumentReference docRef = await bookingCollection.add(bookingData);
+      String documentId = docRef.id;
+
+      // Update the document with zbookingId
+      await bookingCollection.doc(documentId).update({
+        'zbookingId': documentId,
+      });
 
       return const Right('Pemesanan berhasil');
     } catch (e) {
@@ -37,13 +44,25 @@ class KaryawanRemoteDatasource {
     }
   }
 
-  Future<Either<String, List<BookingModel>>> getBookingsByUserId(String userId) async {
+  /// Future
+  // Future<Either<String, List<BookingModel>>> getBookingsByUserId(String userId) async {
+  //   try {
+  //     final snapshot = await bookingCollection.where('userId', isEqualTo: userId).get();
+  //     final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
+  //     return Right(bookings);
+  //   } catch (e) {
+  //     return Left('Gagal mengambil booking: $e');
+  //   }
+  // }
+
+  /// Stream
+  Stream<List<BookingModel>> getBookingsByUserId(String userId) {
     try {
-      final snapshot = await bookingCollection.where('userId', isEqualTo: userId).get();
-      final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
-      return Right(bookings);
+      return bookingCollection.where('userId', isEqualTo: userId).snapshots().map(
+            (snapshot) => snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList(),
+          );
     } catch (e) {
-      return Left('Gagal mengambil booking: $e');
+      throw Exception('Gagal mengambil data booking: $e');
     }
   }
 }

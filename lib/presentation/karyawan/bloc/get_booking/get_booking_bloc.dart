@@ -8,14 +8,29 @@ part 'get_booking_state.dart';
 
 class GetBookingBloc extends Bloc<GetBookingEvent, GetBookingState> {
   GetBookingBloc() : super(GetBookingInitial()) {
+    // on<GetBookingByUser>((event, emit) async {
+    //   emit(GetBookingLoading());
+    //   final user = FirebaseAuth.instance.currentUser;
+    //   final result = await KaryawanRemoteDatasource().getBookingsByUserId(user!.uid);
+    //   result.fold(
+    //     (error) => emit(GetBookingError(message: error)),
+    //     (data) => emit(GetBookingLoaded(booking: data)),
+    //   );
+    // });
+
     on<GetBookingByUser>((event, emit) async {
       emit(GetBookingLoading());
-      final user = FirebaseAuth.instance.currentUser;
-      final result = await KaryawanRemoteDatasource().getBookingsByUserId(user!.uid);
-      result.fold(
-        (error) => emit(GetBookingError(message: error)),
-        (data) => emit(GetBookingLoaded(booking: data)),
-      );
+      try {
+        final user = FirebaseAuth.instance.currentUser;
+        final keluhanStream = KaryawanRemoteDatasource().getBookingsByUserId(user!.uid);
+        await emit.forEach<List<BookingModel>>(
+          keluhanStream,
+          onData: (data) => GetBookingLoaded(booking: data),
+          onError: (_, error) => GetBookingError(message: 'Error Get Keluhan'),
+        );
+      } catch (e) {
+        emit(GetBookingError(message: e.toString()));
+      }
     });
   }
 }

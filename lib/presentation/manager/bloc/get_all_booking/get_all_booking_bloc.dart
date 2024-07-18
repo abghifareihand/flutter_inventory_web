@@ -7,13 +7,27 @@ part 'get_all_booking_state.dart';
 
 class GetAllBookingBloc extends Bloc<GetAllBookingEvent, GetAllBookingState> {
   GetAllBookingBloc() : super(GetAllBookingInitial()) {
+    // on<GetAllBooking>((event, emit) async {
+    //   emit(GetAllBookingLoading());
+    //   final result = await ManagerRemoteDatasource().getAllBooking();
+    //   result.fold(
+    //     (error) => emit(GetAllBookingError(message: error)),
+    //     (data) => emit(GetAllBookingLoaded(booking: data)),
+    //   );
+    // });
+
     on<GetAllBooking>((event, emit) async {
       emit(GetAllBookingLoading());
-      final result = await ManagerRemoteDatasource().getAllBooking();
-      result.fold(
-        (error) => emit(GetAllBookingError(message: error)),
-        (data) => emit(GetAllBookingLoaded(booking: data)),
-      );
+      try {
+        final bookingStream = ManagerRemoteDatasource().getAllBooking();
+        await emit.forEach<List<BookingModel>>(
+          bookingStream,
+          onData: (data) => GetAllBookingLoaded(booking: data),
+          onError: (_, error) => GetAllBookingError(message: 'Error Get Booking'),
+        );
+      } catch (e) {
+        emit(GetAllBookingError(message: e.toString()));
+      }
     });
   }
 }
