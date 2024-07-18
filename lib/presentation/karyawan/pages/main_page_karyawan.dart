@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconventory_web/presentation/karyawan/bloc/get_booking/get_booking_bloc.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/home_page_karyawan.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/profile_page_karyawan.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/transaction_page_karyawan.dart';
@@ -19,6 +20,7 @@ class _MainPageKaryawanState extends State<MainPageKaryawan> {
   void initState() {
     context.read<UserBloc>().add(GetUser());
     context.read<GetProductBloc>().add(GetProduct());
+    context.read<GetBookingBloc>().add(GetBookingByUser());
     super.initState();
   }
 
@@ -75,13 +77,20 @@ class _MainPageKaryawanState extends State<MainPageKaryawan> {
                 ),
               ],
             ),
-            Text(
-              'Karyawan',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+            BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserLoaded) {
+                  return Text(
+                    state.user.name,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
           ],
         ),

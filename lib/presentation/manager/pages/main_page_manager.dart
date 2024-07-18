@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconventory_web/presentation/auth/bloc/user/user_bloc.dart';
+import 'package:iconventory_web/presentation/manager/bloc/get_all_booking/get_all_booking_bloc.dart';
 import 'package:iconventory_web/presentation/manager/bloc/get_karyawan/get_karyawan_bloc.dart';
 import 'package:iconventory_web/presentation/manager/bloc/get_product/get_product_bloc.dart';
 import 'package:iconventory_web/presentation/manager/pages/home_page_manager.dart';
@@ -22,6 +23,7 @@ class _MainPageManagerState extends State<MainPageManager> {
     context.read<UserBloc>().add(GetUser());
     context.read<GetProductBloc>().add(GetProduct());
     context.read<GetKaryawanBloc>().add(GetKaryawan());
+    context.read<GetAllBookingBloc>().add(GetAllBooking());
     super.initState();
   }
 

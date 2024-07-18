@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/core/components/button_primary.dart';
 import 'package:iconventory_web/core/components/custom_button.dart';
+import 'package:iconventory_web/data/models/product_cart.dart';
+import 'package:iconventory_web/data/models/user_response_model.dart';
+import 'package:iconventory_web/presentation/karyawan/bloc/add_booking/add_booking_bloc.dart';
+import 'package:iconventory_web/presentation/karyawan/pages/main_page_karyawan.dart';
 import 'package:iconventory_web/presentation/karyawan/widgets/list_product_cart.dart';
 
+import '../../../core/components/custom_dialog.dart';
+import '../../auth/bloc/user/user_bloc.dart';
 import '../bloc/cart/cart_bloc.dart';
 
 class CartPageKaryawan extends StatelessWidget {
@@ -121,9 +126,54 @@ class CartPageKaryawan extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.2),
                               ),
                               const SizedBox(height: 24),
-                              CustomButton(
-                                onPressed: () {},
-                                text: 'Book Now',
+                              BlocConsumer<AddBookingBloc, AddBookingState>(
+                                listener: (context, state) {
+                                  if (state is AddBookingLoaded) {
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return CustomDialog(
+                                            message: 'Booking product success',
+                                            onPressed: () {
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const MainPageKaryawan(),
+                                                  ),
+                                                  (route) => false);
+                                              context.read<CartBloc>().add(ResetCart());
+                                            });
+                                      },
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  return BlocBuilder<UserBloc, UserState>(
+                                    builder: (context, state) {
+                                      if (state is UserLoaded) {
+                                        final userData = state.user;
+                                        return CustomButton(
+                                          onPressed: () {
+                                            final products = data.map((product) => ProductCart(product: product.product, quantity: product.quantity)).toList();
+                                            final totalQuantity = data.fold(0, (sum, product) => sum + product.quantity);
+                                            context.read<AddBookingBloc>().add(
+                                                  AddBooking(
+                                                    products: products,
+                                                    userId: userData.id,
+                                                    userName: userData.name,
+                                                    totalProduct: totalQuantity,
+                                                  ),
+                                                );
+                                          },
+                                          text: 'Book Now',
+                                          isLoading: state is AddBookingLoading,
+                                        );
+                                      }
+                                      return const SizedBox();
+                                    },
+                                  );
+                                },
                               ),
                             ],
                           ),

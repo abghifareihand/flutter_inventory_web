@@ -38,5 +38,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         }
       }
     });
+
+    on<ResetCart>((event, emit) {
+      emit(CartLoading());
+      emit(CartLoaded(products: []));
+    });
   }
 }

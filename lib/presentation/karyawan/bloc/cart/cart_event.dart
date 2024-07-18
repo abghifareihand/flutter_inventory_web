@@ -15,3 +15,5 @@ class RemoveFromCart extends CartEvent {
     required this.productItems,
   });
 }
+
+class ResetCart extends CartEvent {}

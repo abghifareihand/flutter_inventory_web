@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:iconventory_web/data/models/booking_model.dart';
 import 'package:iconventory_web/data/models/product_model.dart';
 
 import '../models/user_response_model.dart';
@@ -7,6 +8,7 @@ import '../models/user_response_model.dart';
 class ManagerRemoteDatasource {
   final usersCollection = FirebaseFirestore.instance.collection('users');
   final productCollection = FirebaseFirestore.instance.collection('product');
+  final bookingCollection = FirebaseFirestore.instance.collection('booking');
 
   /// Get Data Karyawan
   Future<Either<String, List<UserResponseModel>>> getKaryawan() async {
@@ -61,6 +63,17 @@ class ManagerRemoteDatasource {
       return const Right('Hapus product berhasil');
     } catch (e) {
       return Left('Gagal menghapus product: $e');
+    }
+  }
+
+  /// Get all bookings
+  Future<Either<String, List<BookingModel>>> getAllBooking() async {
+    try {
+      final snapshot = await bookingCollection.get();
+      final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
+      return Right(bookings);
+    } catch (e) {
+      return Left('Failed to retrieve bookings: $e');
     }
   }
 }

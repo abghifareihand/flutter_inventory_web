@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/presentation/karyawan/widgets/banner_slider.dart';
 import 'package:iconventory_web/presentation/karyawan/widgets/grid_card_product.dart';
 
 import '../../manager/bloc/get_product/get_product_bloc.dart';
@@ -18,10 +17,6 @@ class HomePageKaryawan extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 300),
             child: Column(
               children: [
-                const BannerSlider(),
-                const SizedBox(
-                  height: 20.0,
-                ),
                 // GridView dengan 4 kolom
                 BlocBuilder<GetProductBloc, GetProductState>(
                   builder: (context, state) {
