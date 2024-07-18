@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconventory_web/presentation/auth/bloc/user/user_bloc.dart';
+import 'package:iconventory_web/presentation/manager/bloc/get_karyawan/get_karyawan_bloc.dart';
+import 'package:iconventory_web/presentation/manager/bloc/get_product/get_product_bloc.dart';
 import 'package:iconventory_web/presentation/manager/pages/home_page_manager.dart';
+import 'package:iconventory_web/presentation/manager/pages/karyawan_page_manager.dart';
 import 'package:iconventory_web/presentation/manager/pages/profile_page_manager.dart';
 import 'package:iconventory_web/presentation/manager/pages/transaction_page_manager.dart';
 
@@ -17,6 +20,8 @@ class _MainPageManagerState extends State<MainPageManager> {
   @override
   void initState() {
     context.read<UserBloc>().add(GetUser());
+    context.read<GetProductBloc>().add(GetProduct());
+    context.read<GetKaryawanBloc>().add(GetKaryawan());
     super.initState();
   }
 
@@ -25,6 +30,7 @@ class _MainPageManagerState extends State<MainPageManager> {
   final List<Widget> _pages = [
     const HomePageManager(),
     const TransactionPageManager(),
+    const KaryawanPageManager(),
     const ProfilePageManager(),
   ];
 
@@ -77,10 +83,16 @@ class _MainPageManagerState extends State<MainPageManager> {
                       isSelected: _selectedIndex == 1, // Pass selectedIndex
                     ),
                     DrawerListTile(
-                      title: 'Account',
-                      svgSrc: 'assets/icons/menu_task.svg',
+                      title: 'Data Karyawan',
+                      svgSrc: 'assets/icons/menu_tran.svg',
                       onTap: () => _onItemTapped(2),
                       isSelected: _selectedIndex == 2, // Pass selectedIndex
+                    ),
+                    DrawerListTile(
+                      title: 'Account',
+                      svgSrc: 'assets/icons/menu_task.svg',
+                      onTap: () => _onItemTapped(3),
+                      isSelected: _selectedIndex == 3, // Pass selectedIndex
                     ),
                     // Add other menu items here if needed
                   ],

@@ -7,6 +7,9 @@ import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/logout/logout_bloc.dart';
 import 'presentation/auth/bloc/register/register_bloc.dart';
 import 'presentation/auth/bloc/user/user_bloc.dart';
+import 'presentation/manager/bloc/add_product/add_product_bloc.dart';
+import 'presentation/manager/bloc/get_karyawan/get_karyawan_bloc.dart';
+import 'presentation/manager/bloc/get_product/get_product_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +38,17 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LogoutBloc(),
+        ),
+
+        /// MANAGER
+        BlocProvider(
+          create: (context) => AddProductBloc(),
+        ),
+        BlocProvider(
+          create: (context) => GetProductBloc(),
+        ),
+        BlocProvider(
+          create: (context) => GetKaryawanBloc(),
         ),
       ],
       child: MaterialApp(

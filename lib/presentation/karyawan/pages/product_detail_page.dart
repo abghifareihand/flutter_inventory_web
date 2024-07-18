@@ -134,21 +134,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       child: Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                           border: Border.all(
-                                            color: quantity == 1
-                                                ? Colors.grey
-                                                : Colors.blue,
+                                            color: quantity == 1 ? Colors.grey : Colors.blue,
                                             width: 2,
                                           ),
                                         ),
                                         child: Icon(
                                           Icons.remove,
                                           size: 24,
-                                          color: quantity == 1
-                                              ? Colors.grey
-                                              : Colors.blue,
+                                          color: quantity == 1 ? Colors.grey : Colors.blue,
                                         ),
                                       ),
                                     ),
@@ -173,8 +168,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       child: Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                           border: Border.all(
                                             color: Colors.blue,
                                             width: 2,

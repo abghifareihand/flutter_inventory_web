@@ -28,9 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => role == 'karyawan'
-              ? const MainPageKaryawan()
-              : const MainPageManager(),
+          builder: (context) => role == 'karyawan' ? const MainPageKaryawan() : const MainPageManager(),
         ),
       );
     } else {

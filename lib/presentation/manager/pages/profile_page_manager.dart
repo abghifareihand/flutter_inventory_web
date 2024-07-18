@@ -18,9 +18,9 @@ class ProfilePageManager extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Header(
-              title: 'Profile',
-            ),
+            // const Header(
+            //   title: 'Profile',
+            // ),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -32,7 +32,17 @@ class ProfilePageManager extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const Text(
+                          'My Profile',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is UserLoaded) {
@@ -79,15 +89,13 @@ class ProfilePageManager extends StatelessWidget {
                                           Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const LoginPage(),
+                                                builder: (context) => const LoginPage(),
                                               ),
                                               (route) => false);
                                         }
 
                                         if (state is LogoutError) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
+                                          ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(state.message),
                                               backgroundColor: Colors.red,
@@ -98,9 +106,7 @@ class ProfilePageManager extends StatelessWidget {
                                       builder: (context, state) {
                                         return CustomButton(
                                           onPressed: () {
-                                            context
-                                                .read<LogoutBloc>()
-                                                .add(Logout());
+                                            context.read<LogoutBloc>().add(Logout());
                                           },
                                           text: 'Logout',
                                           isLoading: state is LogoutLoading,

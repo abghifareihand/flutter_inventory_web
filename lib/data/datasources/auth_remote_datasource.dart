@@ -10,8 +10,7 @@ class AuthRemoteDatasource {
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
   // Register
-  Future<Either<String, UserResponseModel>> register(
-      String name, String email, String password, String role) async {
+  Future<Either<String, UserResponseModel>> register(String name, String email, String password, String role) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -32,15 +31,13 @@ class AuthRemoteDatasource {
   }
 
   // Login
-  Future<Either<String, UserResponseModel>> login(
-      String email, String password) async {
+  Future<Either<String, UserResponseModel>> login(String email, String password) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final response =
-          await usersCollection.doc(userCredential.user!.uid).get();
+      final response = await usersCollection.doc(userCredential.user!.uid).get();
       UserResponseModel user = UserResponseModel.fromDocumentSnapshot(response);
       await AuthLocalDatasource().saveAuthData(user);
       return Right(user);
