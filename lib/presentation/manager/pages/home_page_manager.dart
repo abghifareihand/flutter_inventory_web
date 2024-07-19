@@ -1,28 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconventory_web/core/components/button_primary.dart';
-import 'package:iconventory_web/core/components/custom_field.dart';
-import 'package:iconventory_web/data/models/product_model.dart';
-import 'package:iconventory_web/presentation/superadmin/bloc/add_product/add_product_bloc.dart';
-import 'package:iconventory_web/presentation/superadmin/bloc/delete_product/delete_product_bloc.dart';
-
-import '../../../core/components/alert_delete.dart';
 import '../../superadmin/bloc/get_product/get_product_bloc.dart';
 
-class HomePageManager extends StatefulWidget {
+class HomePageManager extends StatelessWidget {
   const HomePageManager({super.key});
-
-  @override
-  State<HomePageManager> createState() => _HomePageManagerState();
-}
-
-class _HomePageManagerState extends State<HomePageManager> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _specificationController = TextEditingController();
-  final TextEditingController _yearController = TextEditingController();
-  final TextEditingController _stockController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

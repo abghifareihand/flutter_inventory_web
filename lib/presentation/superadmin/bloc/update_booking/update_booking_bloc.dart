@@ -8,7 +8,10 @@ class UpdateBookingBloc extends Bloc<UpdateBookingEvent, UpdateBookingState> {
   UpdateBookingBloc() : super(UpdateBookingInitial()) {
     on<UpdateBooking>((event, emit) async {
       emit(UpdateBookingLoading());
-      final result = await ManagerRemoteDatasource().approveBooking(event.bookingId);
+      final result = await ManagerRemoteDatasource().approveBooking(
+        event.bookingId,
+        event.tanggalKembali,
+      );
       result.fold(
         (error) => emit(UpdateBookingError(message: error)),
         (data) => emit(UpdateBookingLoaded(message: data)),

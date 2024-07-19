@@ -152,7 +152,7 @@ class TransactionDetailPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          booking.tanggalKembali.toFormattedDate(),
+                          booking.tanggalKembali?.toFormattedDate() ?? '-',
                           style: const TextStyle(
                             fontSize: 14,
                           ),

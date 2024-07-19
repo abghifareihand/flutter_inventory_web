@@ -2,23 +2,28 @@ import 'package:flutter/material.dart';
 
 class CustomDialog extends StatelessWidget {
   final String message;
+  final IconData icon;
   final Function() onPressed;
 
   const CustomDialog({
     super.key,
     required this.message,
+    required this.icon,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      actionsPadding: const EdgeInsets.all(20),
+      actionsPadding: const EdgeInsets.only(
+        right: 20,
+        bottom: 20,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      icon: const Icon(
-        Icons.check_circle_outline_outlined,
+      icon: Icon(
+        icon,
         size: 52,
         color: Colors.blue,
       ),
@@ -41,7 +46,7 @@ class CustomDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6.0),
               ),
             ),
-            child: const Text('Back to Home'),
+            child: const Text('Done'),
           ),
         ),
       ],

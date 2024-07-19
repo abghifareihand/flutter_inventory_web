@@ -91,19 +91,19 @@ class _MainPageManagerState extends State<MainPageManager> {
                     ),
                     DrawerListTile(
                       title: 'Home',
-                      svgSrc: 'assets/icons/menu_dashboard.svg',
+                      svgSrc: 'assets/icons/ic_home.svg',
                       onTap: () => _onItemTapped(0),
                       isSelected: _selectedIndex == 0, // Pass selectedIndex
                     ),
                     DrawerListTile(
                       title: 'Transaction',
-                      svgSrc: 'assets/icons/menu_tran.svg',
+                      svgSrc: 'assets/icons/ic_trans.svg',
                       onTap: () => _onItemTapped(1),
                       isSelected: _selectedIndex == 1, // Pass selectedIndex
                     ),
                     DrawerListTile(
                       title: 'Account',
-                      svgSrc: 'assets/icons/menu_task.svg',
+                      svgSrc: 'assets/icons/ic_user.svg',
                       onTap: () => _onItemTapped(2),
                       isSelected: _selectedIndex == 2, // Pass selectedIndex
                     ),
@@ -159,7 +159,7 @@ class DrawerListTile extends StatelessWidget {
             isSelected ? Colors.white : Colors.black,
             BlendMode.srcIn,
           ),
-          height: 16,
+          height: 20,
         ),
         title: Text(
           title,

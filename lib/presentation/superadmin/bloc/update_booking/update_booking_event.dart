@@ -4,6 +4,7 @@ sealed class UpdateBookingEvent {}
 
 class UpdateBooking extends UpdateBookingEvent {
   final String bookingId;
+  final DateTime tanggalKembali;
 
-  UpdateBooking({required this.bookingId});
+  UpdateBooking({required this.bookingId, required this.tanggalKembali});
 }

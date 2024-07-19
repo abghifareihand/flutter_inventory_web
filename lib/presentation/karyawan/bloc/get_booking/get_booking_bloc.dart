@@ -26,7 +26,7 @@ class GetBookingBloc extends Bloc<GetBookingEvent, GetBookingState> {
         await emit.forEach<List<BookingModel>>(
           keluhanStream,
           onData: (data) => GetBookingLoaded(booking: data),
-          onError: (_, error) => GetBookingError(message: 'Error Get Keluhan'),
+          onError: (_, error) => GetBookingError(message: 'Error Get Booking'),
         );
       } catch (e) {
         emit(GetBookingError(message: e.toString()));

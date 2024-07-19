@@ -66,20 +66,9 @@ class ManagerRemoteDatasource {
     }
   }
 
-  /// Get all bookings
-  // Future<Either<String, List<BookingModel>>> getAllBooking() async {
-  //   try {
-  //     final snapshot = await bookingCollection.get();
-  //     final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
-  //     return Right(bookings);
-  //   } catch (e) {
-  //     return Left('Failed to retrieve bookings: $e');
-  //   }
-  // }
-
   Stream<List<BookingModel>> getAllBooking() {
     try {
-      return bookingCollection.snapshots().map(
+      return bookingCollection.orderBy('tanggalPinjam', descending: false).snapshots().map(
             (snapshot) => snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList(),
           );
     } catch (e) {
@@ -88,10 +77,11 @@ class ManagerRemoteDatasource {
   }
 
   /// Update approved
-  Future<Either<String, String>> approveBooking(String bookingId) async {
+  Future<Either<String, String>> approveBooking(String bookingId, DateTime tanggalKembali) async {
     try {
       await bookingCollection.doc(bookingId).update({
         'isApproved': true,
+        'tanggalKembali': Timestamp.fromDate(tanggalKembali.toUtc()),
       });
       return const Right('Booking berhasil di-approve');
     } catch (e) {

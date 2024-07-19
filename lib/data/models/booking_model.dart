@@ -7,7 +7,7 @@ class BookingModel {
   final List<Map<String, dynamic>> products;
   final int totalProduct;
   final DateTime tanggalPinjam;
-  final DateTime tanggalKembali;
+  final DateTime? tanggalKembali;
   final bool isApproved;
 
   BookingModel({
@@ -29,7 +29,7 @@ class BookingModel {
       products: List<Map<String, dynamic>>.from(snapshot['products']),
       totalProduct: snapshot['totalProduct'],
       tanggalPinjam: (snapshot['tanggalPinjam'] as Timestamp).toDate(),
-      tanggalKembali: (snapshot['tanggalKembali'] as Timestamp).toDate(),
+      tanggalKembali: snapshot['tanggalKembali'] != null ? (snapshot['tanggalKembali'] as Timestamp).toDate() : null,
       isApproved: snapshot['isApproved'] ?? false,
     );
   }

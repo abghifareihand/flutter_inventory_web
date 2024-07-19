@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconventory_web/core/components/custom_dialog.dart';
 import 'package:iconventory_web/core/constants/date_time_ext.dart';
 import 'package:iconventory_web/data/models/booking_model.dart';
 import 'package:iconventory_web/presentation/karyawan/pages/transaction_detail_page.dart';
@@ -14,14 +15,29 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TransactionDetailPage(booking: booking),
-          ),
-        );
-      },
+      onTap: booking.isApproved
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TransactionDetailPage(booking: booking),
+                ),
+              );
+            }
+          : () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return CustomDialog(
+                      icon: Icons.dangerous_outlined,
+                      message: 'Maaf belum di approve admin',
+                      onPressed: () {
+                        Navigator.pop(context);
+                      });
+                },
+              );
+            },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -94,7 +110,7 @@ class BookingCard extends StatelessWidget {
               ),
             ),
             Text(
-              booking.tanggalKembali.toFormattedDate(),
+              booking.tanggalKembali?.toFormattedDate() ?? '-',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

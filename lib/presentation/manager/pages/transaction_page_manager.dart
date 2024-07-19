@@ -95,7 +95,7 @@ class TransactionPageManager extends StatelessWidget {
                                               Text(booking.tanggalPinjam.toFormattedDate()),
                                             ),
                                             DataCell(
-                                              Text(booking.tanggalKembali.toFormattedDate()),
+                                              Text(booking.tanggalKembali?.toFormattedDate() ?? '-'),
                                             ),
                                             DataCell(
                                               Text(

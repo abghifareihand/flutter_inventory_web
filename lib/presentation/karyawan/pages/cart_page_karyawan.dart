@@ -133,6 +133,7 @@ class CartPageKaryawan extends StatelessWidget {
                                       context: context,
                                       builder: (context) {
                                         return CustomDialog(
+                                            icon: Icons.check_circle_outline_outlined,
                                             message: 'Booking product success',
                                             onPressed: () {
                                               Navigator.pushAndRemoveUntil(

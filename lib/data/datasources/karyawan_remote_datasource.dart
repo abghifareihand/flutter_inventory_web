@@ -16,8 +16,6 @@ class KaryawanRemoteDatasource {
     try {
       // Tanggal peminjaman (sekarang)
       DateTime tanggalPinjam = DateTime.now();
-      // Tanggal kembali (5 hari setelah tanggal peminjaman)
-      DateTime tanggalKembali = tanggalPinjam.add(const Duration(days: 5));
 
       Map<String, dynamic> bookingData = {
         'userId': userId,
@@ -25,7 +23,7 @@ class KaryawanRemoteDatasource {
         'products': products.map((cart) => cart.toMap()).toList(),
         'totalProduct': totalProduct,
         'tanggalPinjam': Timestamp.fromDate(tanggalPinjam.toUtc()),
-        'tanggalKembali': Timestamp.fromDate(tanggalKembali.toUtc()),
+        'tanggalKembali': null,
         'isApproved': false,
       };
 
@@ -43,17 +41,6 @@ class KaryawanRemoteDatasource {
       return Left('Gagal melakukan pemesanan: $e');
     }
   }
-
-  /// Future
-  // Future<Either<String, List<BookingModel>>> getBookingsByUserId(String userId) async {
-  //   try {
-  //     final snapshot = await bookingCollection.where('userId', isEqualTo: userId).get();
-  //     final bookings = snapshot.docs.map((doc) => BookingModel.fromDocumentSnapshot(doc)).toList();
-  //     return Right(bookings);
-  //   } catch (e) {
-  //     return Left('Gagal mengambil booking: $e');
-  //   }
-  // }
 
   /// Stream
   Stream<List<BookingModel>> getBookingsByUserId(String userId) {
