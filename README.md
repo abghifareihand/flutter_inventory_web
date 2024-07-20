@@ -31,3 +31,8 @@
 
 **Responsibilities:**
 - Process item borrow transactions
+
+<br>
+
+### FIREBASE
+![Screenshot](assets/screenshots/firebase.png)
