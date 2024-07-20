@@ -16,11 +16,15 @@
 - Create products
 - Approve item borrow requests
 
+<br>
+
 ### MANAGER
 ![Screenshot](assets/screenshots/manager.png)
 
 **Responsibilities:**
 - View dashboard
+
+<br>
 
 ### KARYAWAN
 ![Screenshot](assets/screenshots/karyawan.png)
