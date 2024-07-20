@@ -7,7 +7,7 @@
 ## Roles
 - Admin
 - Manager
-- Employee
+- Karyawan
 
 ### ADMIN
 ![Screenshot](assets/screenshots/admin.png)
@@ -22,8 +22,8 @@
 **Responsibilities:**
 - View dashboard
 
-### EMPLOYEE
-![Screenshot](assets/screenshots/employee.png)
+### KARYAWAN
+![Screenshot](assets/screenshots/karyawan.png)
 
 **Responsibilities:**
 - Process item borrow transactions
